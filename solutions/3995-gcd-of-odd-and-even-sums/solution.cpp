@@ -4,8 +4,8 @@ public:
         int sumOdd = 0;
         int sumEven = 0;
         for(int i = 1; i <= n; i++) {
-            sumOdd += 2*i - 1;   // 1, 3, 5, ...
-            sumEven += 2*i;      // 2, 4, 6, ...
+            sumOdd += 2*i - 1;   
+            sumEven += 2*i;      
         }
         return __gcd(sumOdd, sumEven);
     }

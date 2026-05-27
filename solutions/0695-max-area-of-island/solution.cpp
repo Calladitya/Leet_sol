@@ -1,54 +1,82 @@
 class Solution {
+
+private:
+
+    int bfs(int row, int col,
+            vector<vector<int>>& vis,
+            vector<vector<int>>& grid) {
+
+        int n = grid.size();
+        int m = grid[0].size();
+
+        queue<pair<int,int>> q;
+
+        q.push({row, col});
+
+        vis[row][col] = 1;
+
+        int area = 1;
+
+        int delr[4] = {-1, 0, 1, 0};
+        int delc[4] = {0, 1, 0, -1};
+
+        while (!q.empty()) {
+
+            row = q.front().first;
+            col = q.front().second;
+
+            q.pop();
+
+            for (int i = 0; i < 4; i++) {
+
+                int nrow = row + delr[i];
+                int ncol = col + delc[i];
+
+                if (nrow >= 0 && ncol >= 0 &&
+                    nrow < n && ncol < m &&
+                    grid[nrow][ncol] == 1 &&
+                    !vis[nrow][ncol]) {
+
+                    vis[nrow][ncol] = 1;
+
+                    area++;
+
+                    q.push({nrow, ncol});
+                }
+            }
+        }
+
+        return area;
+    }
+
 public:
+
     int maxAreaOfIsland(vector<vector<int>>& grid) {
 
         int n = grid.size();
         int m = grid[0].size();
 
-        vector<vector<int>> vis(n, vector<int>(m, 0));
-        queue<pair<int,int>> q;
+        vector<vector<int>> vis
+        (n, vector<int>(m, 0));
 
-        int delr[4] = {-1, 0, 1, 0};
-        int delc[4] = {0, 1, 0, -1};
+        int maxArea = 0;
 
-        int Maxcount = 0;
+        for (int row = 0; row < n; row++) {
 
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
+            for (int col = 0; col < m; col++) {
 
-                if(grid[i][j] == 1 && !vis[i][j]){
+                if (!vis[row][col] &&
+                    grid[row][col] == 1) {
 
-                    int count = 0;
-                    vis[i][j] = 1;
-                    q.push({i, j});
-                    count++;
+                    int area =
+                    bfs(row, col, vis, grid);
 
-                    while(!q.empty()){
-                        auto [r, c] = q.front();
-                        q.pop();
-
-                        for(int k = 0; k < 4; k++){
-                            int nrow = r + delr[k];
-                            int ncol = c + delc[k];
-
-                            if(nrow < 0 || nrow >= n || ncol < 0 || ncol >= m)
-                                continue;
-
-                            if(grid[nrow][ncol] == 1 && !vis[nrow][ncol]){
-                                vis[nrow][ncol] = 1;
-                                count++;
-                                q.push({nrow, ncol});
-                            }
-                        }
-                    }
-
-                    Maxcount = max(Maxcount, count);
+                    maxArea =
+                    max(maxArea, area);
                 }
-
             }
         }
 
-        return Maxcount;
+        return maxArea;
     }
 };
-

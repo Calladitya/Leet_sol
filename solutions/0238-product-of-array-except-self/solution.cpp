@@ -1,73 +1,68 @@
+// class Solution {
+// public:
+//     vector<int> productExceptSelf(vector<int>& nums) {
+    //     vector<int>product;
+    //    for(int i=0;i<nums.size();i++){
+    //      int ans=1;
+    //     for(int j=0;j<nums.size();j++){
+    //         if(i != j){
+    //             ans=ans*nums[j];
+    //         }
+    //     }
+    //     product.push_back(ans);
+    //    }
+    //    return product;w
+        
+// class Solution {
+// public:
+//     vector<int> productExceptSelf(vector<int>& nums) {
+//      int i=0;
+//      vector<int>product;
+//      while(i!=nums.size()){
+//      int end=1;int start=1;
+//      for(int j=0;j<i;j++){
+//         start*=nums[j];
+//      }
+//      for(int k=i+1;k<nums.size();k++){
+//         end*=nums[k];
+//      }
+//      product.push_back(start*end);
+//      i++;
+//      }
+//      return product;
+//     }
+// };
+
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-//         // vector<int>result;
-//         // int product;
-//         // for(int i=0;i<nums.size();i++){
-//         //      product=1;
-//         //      for(int j=0;j<nums.size();j++){
-//         //            if(j!=i){
-//         //             product*=nums[j];
-//         //            }
-//         //      }
-//         //      result.push_back(product);
-//         // }
-//         // return result;
-//          int n = nums.size();
-//         vector<int> result(n, 1);
+        vector<int> left, right, product;
 
-//         int product1 = 1; // left product
-//         for (int i = 0; i < n; i++) {
-//             result[i] = product1;   // store prefix till i-1
-//             product1 *= nums[i];    // update prefix
-//         }
+        int ans = 1;
 
-//         int product2 = 1; // right product
-//         for (int i = n - 1; i >= 0; i--) {
-//             result[i] *= product2;  // multiply with suffix
-//             product2 *= nums[i];    // update suffix
-//         }
+        left.push_back(1);
 
-//         return result;
+        for(int i = 1; i < nums.size(); i++) {
+            ans = ans * nums[i - 1];
+            left.push_back(ans);
+        }
 
-// //         // class Solution {
-// // public:
-// //     vector<int> productExceptSelf(vector<int>& nums) {
-// //         int n = nums.size();
-// //         vector<int> result(n, 1);
+        int ans2 = 1;
 
-// //         int product1 = 1; // left product
-// //         for (int i = 0; i < n; i++) {
-// //             result[i] = product1;   // store prefix till i-1
-// //             product1 *= nums[i];    // update prefix
-// //         }
+        right.push_back(1);
 
-// //         int product2 = 1; // right product
-// //         for (int i = n - 1; i >= 0; i--) {
-// //             result[i] *= product2;  // multiply with suffix
-// //             product2 *= nums[i];    // update suffix
-// //         }
+        for(int i = nums.size() - 2; i >= 0; i--) {
+            ans2 = ans2 * nums[i + 1];
+            right.push_back(ans2);
+        }
 
-// //         return result;
-//     }
-// };
-     int n=nums.size();
-     vector<int>result(n,1);
 
-     int left_product=1;
-     int right_product=1;
-     int k=0;
-     int j=nums.size()-1;
-     while(k<n && j>=0){
-        result[k]*=left_product;
-        left_product*=nums[k];
+        reverse(right.begin(), right.end());
 
-        result[j]*=right_product;
-        right_product*=nums[j];
+        for(int i = 0; i < nums.size(); i++) {
+            product.push_back(left[i] * right[i]);
+        }
 
-        j--;
-        k++;
-     }
-     return result;
+        return product;
     }
 };

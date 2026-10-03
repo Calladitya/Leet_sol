@@ -1,36 +1,56 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        unordered_map<char,int>mpp;
-        for(char c:t){
-            mpp[c]++;
-        }
-        int need=mpp.size();
-        int have=0;
-        unordered_map<char,int>window;
-         int l=0;
-         int start=0;
-         int mini=INT_MAX;
-         for(int r=0;r<s.size();r++){
-            char c=s[r];
-            window[c]++;
-            if(mpp.count(c) && window[c]==mpp[c]){
-                have++;
-                while(need==have){
-                    if(r-l+1 < mini){
-                        mini=r-l+1;
-                        start=l;
-                    }
-                    window[s[l]]--;
 
-                    if(mpp.count(s[l]) && window[s[l]] < mpp[s[l]]){
-                        have--;
-                    }
-                    l++;
-                }
+        int mini = INT_MAX;
+        int r = 0;
+        int l = 0;
+        int count = 0;
+
+        int freq[256] = {};
+
+        // t ki required frequency
+        for(char ch : t) {
+            freq[ch]++;
+        }
+
+        int window[256] = {};
+
+        int start = 0;
+
+        while(r < s.size()) {
+
+            // current character ko window mein add karo
+            window[s[r]]++;
+
+            // sirf tab count badhao jab required quantity ke andar hai
+            if(window[s[r]] <= freq[s[r]]) {
+                count++;
             }
-         }
-         if(mini == INT_MAX) return "";
-         return s.substr(start,mini);
+
+            // Window valid ho gayi
+            while(count == t.size()) {
+
+                // minimum window update
+                if(r - l + 1 < mini) {
+                    mini = r - l + 1;
+                    start = l;
+                }
+                if(window[s[l]] <= freq[s[l]]) {
+                    count--;
+                }
+
+                window[s[l]]--;
+                l++;
+            }
+
+            r++;
+        }
+
+        if(mini == INT_MAX) {
+            return "";
+        }
+
+        return s.substr(start, mini);
     }
 };

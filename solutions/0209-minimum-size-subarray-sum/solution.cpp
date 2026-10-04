@@ -1,23 +1,46 @@
+// class Solution {
+// public:
+//     int minSubArrayLen(int target, vector<int>& nums) {
+    //     int mini=INT_MAX;
+    //     int sum;
+    //     for(int i=0;i<nums.size();i++){
+    //         sum=0;
+    //         for(int j=i;j<nums.size();j++){
+    //            sum+=nums[j];
+    //            if(sum >= target){
+    //             mini=min(mini,j-i+1);
+    //            }
+    //         }
+    //     }
+    //     if(mini== INT_MAX){
+    //         return 0;
+    //     }
+    //     return mini;
+
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) {
-       int l=0;
-       int r=0;
-       int min_len=INT_MAX;
-       int sum=0;
-       while(r<nums.size()){
-          sum+=nums[r];
-          r++;
-          while(sum>=target){
-            if(sum<target){
-                return 0;
+        int r = 0;
+        int l = 0;
+        int mini = INT_MAX;
+        int sum = 0;
+
+        while(r != nums.size()) {
+
+            sum += nums[r];
+
+            while(sum >= target) {
+                mini = min(mini, r - l + 1);
+
+                sum -= nums[l];
+                l++;
             }
-            min_len=min(min_len,r-l);
-            sum-=nums[l];
-            l++;
-          }
-       }
-       return (min_len == INT_MAX) ? 0 : min_len;//if no subarray was found;
+            r++;
+        }
+        if(mini == INT_MAX) {
+            return 0;
+        }
+
+        return mini;
     }
 };
-

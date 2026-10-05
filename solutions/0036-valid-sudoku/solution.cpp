@@ -1,26 +1,56 @@
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
-        vector<vector<bool>>row(9,vector<bool>(9,false));
-         vector<vector<bool>>col(9,vector<bool>(9,false));
-          vector<vector<bool>>box(9,vector<bool>(9,false));
 
-          for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
-                if(board[i][j]=='.') continue;
+        // Row + Column check
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 9; j++) {
 
-                int num=board[i][j]-'1';//it will convert char into no by the help os ascll values;
+                if(board[i][j] == '.')
+                    continue;
 
-                int boxIndex=(i/3)*3+(j/3);
+                for(int k = 0; k < 9; k++) {
 
-                if(row[i][num]||col[j][num]||box[boxIndex][num]){
-                    return false;
+                    // Row
+                    if(k != j && board[i][k] == board[i][j]) {
+                        return false;
+                    }
+
+                    // Column
+                    if(k != i && board[k][j] == board[i][j]) {
+                        return false;
+                    }
                 }
-                row[i][num]=true;
-                col[j][num]=true;
-                box[boxIndex][num]=true;
             }
-          }
-          return true;
+        }
+
+        // 3 x 3 boxes
+        for(int i = 0; i < 9; i += 3) {
+            for(int j = 0; j < 9; j += 3) {
+
+                for(int r = i; r < i + 3; r++) {
+                    for(int l = j; l < j + 3; l++) {
+
+                        if(board[r][l] == '.')
+                            continue;
+
+                        // Current 3x3 box ke andar search
+                        for(int x = i; x < i + 3; x++) {
+                            for(int y = j; y < j + 3; y++) {
+
+                                if(x == r && y == l)
+                                    continue;
+
+                                if(board[x][y] == board[r][l]) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 };

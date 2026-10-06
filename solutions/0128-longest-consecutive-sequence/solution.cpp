@@ -1,19 +1,24 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-        unordered_set<int>st(nums.begin(),nums.end());
-        int longest=0;
-        for(auto num:st){
-            if(st.find(num-1)==st.end()){
-                int currNum=num;
-                int count=1;
-                while(st.find(currNum+1)!=st.end()){
-                    currNum++;
-                    count++;
-                }
-            longest=max(longest,count);
-            }
+      if(nums.size()==0){
+        return 0;
+      }
+        map<int,int> mpp;
+        int count=1;
+        int maxi=INT_MIN;
+        for(int i = 0; i < nums.size(); i++) {
+             mpp[nums[i]]++;
         }
-        return longest;
+       for(auto it:mpp){
+        if(mpp.find(it.first + 1) != mpp.end()) {
+           count++;
+        }
+        else{
+            count=1;//yaha pe sequence tut raha h 
+        }
+        maxi=max(maxi,count);
+       }
+       return maxi;
     }
 };

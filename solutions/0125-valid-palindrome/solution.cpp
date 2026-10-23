@@ -1,28 +1,28 @@
+
 class Solution {
 public:
     bool isPalindrome(string s) {
-        string result;
+        stringstream ss(s);
+        vector<char> word;
 
-        for(char ch : s) {
-            if(!isalnum(ch)) {
-                continue;
+        for (char ch : s) {
+            if (isalnum(ch)) {
+                word.push_back(tolower(ch));
             }
-
-            result.push_back(toupper(ch));
         }
 
-        int i = 0;
-        int j = result.size() - 1;
+        int l = 0;
+        int h = (int)word.size() - 1;
 
-        while(i < j) {
-            if(result[i] != result[j]) {
+        while (l <= h) {
+            if (word[l] != word[h]) {
                 return false;
             }
-
-            i++;
-            j--;
+            l++;
+            h--;
         }
 
         return true;
     }
 };
+

@@ -12,6 +12,7 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 | [0070-climbing-stairs](https://github.com/Calladitya/Leet_sol/tree/master/0070-climbing-stairs) |
 | [0509-fibonacci-number](https://github.com/Calladitya/Leet_sol/tree/master/0509-fibonacci-number) |
 | [1137-n-th-tribonacci-number](https://github.com/Calladitya/Leet_sol/tree/master/1137-n-th-tribonacci-number) |
+| [3360-stone-removal-game](https://github.com/Calladitya/Leet_sol/tree/master/3360-stone-removal-game) |
 ## Dynamic Programming
 |  |
 | ------- |
@@ -33,4 +34,8 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 |  |
 | ------- |
 | [0746-min-cost-climbing-stairs](https://github.com/Calladitya/Leet_sol/tree/master/0746-min-cost-climbing-stairs) |
+## Simulation
+|  |
+| ------- |
+| [3360-stone-removal-game](https://github.com/Calladitya/Leet_sol/tree/master/3360-stone-removal-game) |
 <!---LeetCode Topics End-->
